@@ -1,4 +1,4 @@
-# Serasa Configuration Management Challenge
+#Configuration Management Challenge
 
 Your task is to manage the state of a node using configuration management.
 
