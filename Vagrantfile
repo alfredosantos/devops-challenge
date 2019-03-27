@@ -1,7 +1,7 @@
 domain   = 'dockerlab.net'
 
 nodes = [
-  { :hostname => 'devops-challenge1',  :ip => '192.168.100.10', :adapter => 1, :box => 'ubuntu/bionic64' },
+  { :hostname => 'devops-challenge1', :box => 'ubuntu/bionic64' },
   # { :hostname => 'devops-challenge2',  :ip => '192.168.100.11', :adapter => 1, :box => 'ubuntu/bionic64' },  
 ]
 
@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
       nodeconfig.vm.box = node[:box]
       nodeconfig.vm.hostname = node[:hostname] + ".box"
       # nodeconfig.vm.network :private_network, ip: node[:ip], :auto_config => false
-      nodeconfig.vm.network :public_network
+      nodeconfig.vm.network :public_network, bridge: 1
 
       memory = node[:ram] ? node[:ram] : 1024;
       nodeconfig.vm.provider :virtualbox do |vb|
@@ -35,8 +35,8 @@ config.vm.provision "shell", inline: <<-SHELL
       || git clone 'https://github.com/hbombonato/devops-challenge.git' \
       || cd devops-challenge
       make build_go
-      make docker_build
-      ansible-playbook -i automation/inventory/hosts automation/devops.yml --ssh-extra-args=" -o ControlMaster=auto -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ControlPersist=60s"
+#      make docker_build
+#      ansible-playbook -i automation/inventory/hosts automation/devops.yml --ssh-extra-args=" -o ControlMaster=auto -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ControlPersist=60s"
       SHELL
       end
     end
