@@ -28,7 +28,9 @@ config.vm.provision "shell", inline: <<-SHELL
       sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
       sudo apt-add-repository -y ppa:ansible/ansible
       sudo apt-get -y update
-      sudo apt-get install -y software-properties-common git docker-ce ansible make automake golang
+      sudo apt-get install -y software-properties-common git docker-ce ansible make automake golang python-pip
+      sudo pip install docker
+      sudo pip install docker-compose
       git config --global push.default simple
       git config --global user.name "DevOps Challenge"
       git config --global user.email herlix@gmail.com
@@ -37,7 +39,7 @@ config.vm.provision "shell", inline: <<-SHELL
       || git clone 'https://github.com/hbombonato/devops-challenge.git'
       cd /home/vagrant/devops-challenge && make build_go
       cd /home/vagrant/devops-challenge && make docker_build
-#      ansible-playbook -i automation/inventory/hosts automation/devops.yml --ssh-extra-args=" -o ControlMaster=auto -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ControlPersist=60s"
+#     cd /home/vagrant/devops-challenge && ansible-playbook -i automation/inventory/hosts automation/devops.yml --ssh-extra-args=" -o ControlMaster=auto -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ControlPersist=60s"
       SHELL
       end
     end
