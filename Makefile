@@ -19,6 +19,7 @@ vagrant_destroy:
 	rm -rf  .vagrant/machines/devops-challenge1
 
 build_go:
+	cd devops-challenge
 	go build -o build/main src/main.go
 	# go build -ldflags "-X main.commit $${commit} -X main.builtAt $$built_at -X main.builtBy $$built_by -X main.builtOn $$built_on" -o build/main src/main.go
 
