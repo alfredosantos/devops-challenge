@@ -23,6 +23,8 @@ Vagrant.configure("2") do |config|
         ]
 config.vm.provision "shell", inline: <<-SHELL
       sudo timedatectl set-timezone America/Sao_Paulo
+      sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
+      && sudo chmod +x /usr/local/bin/docker-compose
       sudo add-apt-repository ppa:gophers/archive
       sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
       sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
@@ -39,7 +41,7 @@ config.vm.provision "shell", inline: <<-SHELL
       || git clone 'https://github.com/hbombonato/devops-challenge.git'
       cd /home/vagrant/devops-challenge && make build_go
       cd /home/vagrant/devops-challenge && make docker_build
-#     cd /home/vagrant/devops-challenge && ansible-playbook -i automation/inventory/hosts automation/devops.yml --ssh-extra-args=" -o ControlMaster=auto -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ControlPersist=60s"
+      cd /home/vagrant/devops-challenge && ansible-playbook -i automation/inventory/hosts automation/devops.yml --ssh-extra-args=" -o ControlMaster=auto -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ControlPersist=60s"
       SHELL
       end
     end

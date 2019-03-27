@@ -3,30 +3,9 @@
     template:  src={{ item.src }} dest={{ item.dest }} owner={{ item.owner }} group={{ item.group }} mode={{ item.mode}}
     with_items:
       - { src: 'templates/dev-challenge.env.j2', dest: '/home/vagrant/dev-challenge.env', owner: 'vagrant', group: 'vagrant', mode: '0655'}
+      - { src: 'templates/docker-compose.yml.j2', dest: '/home/vagrant/docker-compose.yml', owner: 'vagrant', group: 'vagrant', mode: '0655'}
       - { src: 'templates/rsyslog.conf.j2', dest: '/etc/rsyslog.conf ', owner: 'root', group: 'root', mode: '0622'}
     become: true
-    ignore_errors: yes
       
-  - docker_service:
-      project_name: vda
-      build: false
-      pull: yes
-      definition:
-        version: "2"
-        services:
-            weboglang:
-              image: devops-challenge:{{GOAPP_VERSION}}
-              hostname: "{{ ansible_hostname }}-{{GOAPP_NAME}}"
-              mem_limit: 512m
-              env_file:
-                - /home/vagrant/dev-challenge.env
-              ports:
-                - 443:443
-              restart: always
-              logging:
-                driver: syslog
-                options:
-                  syslog-address: udp:/devops-challenge1/:514
-                  syslog-facility: daemon
-                  tag: "{{ ansible_hostname }}-{{GOAPP_NAME}}"
-      become: true
+  - name: "Docker Composes"
+    command: docker-compose up -d

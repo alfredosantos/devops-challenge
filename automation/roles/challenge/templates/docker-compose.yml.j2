@@ -1,0 +1,19 @@
+version: "2.2"
+
+services:
+    weboglang:
+        image: {{GOAPP_NAME}}:{{GOAPP_VERSION}}
+        container_name: "{{ ansible_hostname }}-{{GOAPP_NAME}}"
+        hostname: "{{ ansible_hostname }}-{{GOAPP_NAME}}"
+        mem_limit: 512m
+        env_file:
+          - /home/vagrant/dev-challenge.env
+        ports:
+          - 443:443
+        restart: always
+        logging:
+          driver: syslog
+          options:
+            syslog-address: udp:/{{SYSLOG_HOST}}/:{{SYSLOG_PORT}}
+            syslog-facility: daemon
+            tag: "{{ ansible_hostname }}-{{GOAPP_NAME}}"
