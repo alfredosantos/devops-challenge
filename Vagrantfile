@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
       nodeconfig.vm.box = node[:box]
       nodeconfig.vm.hostname = node[:hostname] + ".box"
       # nodeconfig.vm.network :private_network, ip: node[:ip], :auto_config => false
-      nodeconfig.vm.network :public_network, bridge: 1
+      nodeconfig.vm.network :public_network, :bridge => 'wlp3s0', :auto_network => true
 
       memory = node[:ram] ? node[:ram] : 1024;
       nodeconfig.vm.provider :virtualbox do |vb|
@@ -22,19 +22,22 @@ Vagrant.configure("2") do |config|
 	        "--nicpromisc2", "allow-all"
         ]
 config.vm.provision "shell", inline: <<-SHELL
+      sudo timedatectl set-timezone America/Sao_Paulo
+      sudo add-apt-repository ppa:gophers/archive
       sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
       sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
       sudo apt-add-repository -y ppa:ansible/ansible
       sudo apt-get -y update
-      sudo apt-get install -y software-properties-common git docker-ce ansible make automake
+      sudo apt-get install -y software-properties-common git docker-ce ansible make automake golang
       git config --global push.default simple
       git config --global user.name "DevOps Challenge"
       git config --global user.email herlix@gmail.com
       [ -d "devops-challenge" ]&& cd devops-challenge \
       || git pull 'https://github.com/hbombonato/devops-challenge.git' \
       || git clone 'https://github.com/hbombonato/devops-challenge.git' \
-      || cd devops-challenge
-      make build_go
+      || cd devops-challenge \
+      || git status
+      cd devops-challenge && make build_go
 #      make docker_build
 #      ansible-playbook -i automation/inventory/hosts automation/devops.yml --ssh-extra-args=" -o ControlMaster=auto -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ControlPersist=60s"
       SHELL
