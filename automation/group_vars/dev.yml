@@ -5,3 +5,5 @@ APP_PORT: "8080"
 
 SYSLOGHOST: devops-challenge1
 SYSLOG_PORT: 514
+
+TZ: America/Sao_Paulo
