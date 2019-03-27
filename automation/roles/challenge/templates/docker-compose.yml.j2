@@ -11,9 +11,3 @@ services:
         ports:
           - 443:443
         restart: always
-        logging:
-          driver: syslog
-          options:
-            syslog-address: udp:/{{SYSLOG_HOST}}/:{{SYSLOG_PORT}}
-            syslog-facility: daemon
-            tag: "{{ ansible_hostname }}-{{GOAPP_NAME}}"
