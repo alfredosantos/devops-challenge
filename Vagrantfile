@@ -34,10 +34,8 @@ config.vm.provision "shell", inline: <<-SHELL
       git config --global user.email herlix@gmail.com
       [ -d "devops-challenge" ]&& cd devops-challenge \
       || git pull 'https://github.com/hbombonato/devops-challenge.git' \
-      || git clone 'https://github.com/hbombonato/devops-challenge.git' \
-      || cd devops-challenge \
-      || git status
-      cd devops-challenge && make build_go
+      || git clone 'https://github.com/hbombonato/devops-challenge.git'
+      cd /home/vagrant/devops-challenge && make build_go
 #      make docker_build
 #      ansible-playbook -i automation/inventory/hosts automation/devops.yml --ssh-extra-args=" -o ControlMaster=auto -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ControlPersist=60s"
       SHELL
