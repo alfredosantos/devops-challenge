@@ -1,0 +1,2 @@
+- name: handler status
+  command: echo "deploy ok"

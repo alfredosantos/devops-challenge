@@ -1,0 +1,7 @@
+GOAPP_NAME: "devops-challenge"
+GOAPP_VERSION: 0.0.5
+
+APP_PORT: "8080"
+
+SYSLOGHOST: devops-challenge1
+SYSLOG_PORT: 514

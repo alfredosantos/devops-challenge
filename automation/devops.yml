@@ -1,0 +1,7 @@
+---
+- name: DevOps Challenge
+  hosts: LOCAL
+  vars_files:
+    - group_vars/dev.yml
+  roles:
+    - role: challenge
