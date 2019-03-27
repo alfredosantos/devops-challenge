@@ -9,3 +9,4 @@
       
   - name: "Docker Composes"
     command: docker-compose up -d
+    become: true
